@@ -16,6 +16,13 @@ Bibliography
             ADI-type algorithm for large scale algebraic Riccati equations,
             Numerische Mathematik, Springer-Verlag, 2018.
 
+.. [BBQ07] Barrachina, S., Benner, P. & Quintana-Ortí, E.S. Efficient algorithms
+           for generalized algebraic Bernoulli equations based on the matrix sign
+           function. Numer Algor 46, 351–368 (2007).
+
+.. [BBG19] T. Breiten, C. A. Beattie, S. Gugercin, `\mathcal{H}_2`-gap model
+           reduction for stabilizable and detectable systems, arXiv:1909.13764, 2019.
+
 .. [BG09] C. A. Beattie, S. Gugercin, Interpolatory projection
           methods for structure-preserving model reduction,
           Systems & Control Letters 58, 2009
@@ -51,7 +58,7 @@ Bibliography
             Linear Algebra and its Applications, 2006, 415(2–3),
             373-384
 
-.. [DPW13] R. DeVore, G. Petrova & P. Wojtaszczyk, 
+.. [DPW13] R. DeVore, G. Petrova & P. Wojtaszczyk,
            Greedy Algorithms for Reduced Bases in Banach Spaces,
            Constructive Approximation, 37, 455–466, 2013.
 
@@ -151,3 +158,6 @@ Bibliography
           Interpolation,
           International Journal of Numerical Analysis and
           Modeling, vol. 8, no. 1, pp. 174-188, 2011
+
+.. [ZSW99] K. Zhou, G. Salomon, and E. Wu. Balanced realization and model reduction for
+           unstable systems. Internat. J. Robust Nonlinear Control, 9(3):183–198, 1999
