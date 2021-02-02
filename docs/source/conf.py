@@ -4,39 +4,33 @@
 
 import sys, os, re
 import slugify
-
-os.environ['PYMOR_WITH_SPHINX'] = '1'
+import glob
+import sphinx
+from pathlib import Path
 
 # Check Sphinx version
-import sphinx
-if sphinx.__version__ < "1.0.1":
-    raise RuntimeError("Sphinx 1.0.1 or newer required")
+if sphinx.__version__ < "1.7":
+    raise RuntimeError("Sphinx 1.7 or newer required")
 
-needs_sphinx = '1.0'
+needs_sphinx = '1.7'
+os.environ['PYMOR_WITH_SPHINX'] = '1'
 
 # -----------------------------------------------------------------------------
 # General configuration
 # -----------------------------------------------------------------------------
 
-sys.path.insert(0, os.path.abspath('../../src'))
-sys.path.insert(0, os.path.abspath('.'))
+this_dir = Path(__file__).resolve().parent
+src_dir = (this_dir / '..' / '..' / 'src').resolve()
+sys.path.insert(0, str(src_dir))
+sys.path.insert(0, str(this_dir))
 
 import substitutions
-#generate autodoc
-import gen_apidoc
-import pymor
-#import pymortests
-import pymordemos
-gen_apidoc.walk(pymor)
-# gen_apidoc.walk(pymortests)
-gen_apidoc.walk(pymordemos)
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.coverage',
               'sphinx.ext.autosummary',
-              'sphinx.ext.viewcode',
               'sphinx.ext.intersphinx',
               'pymordocstring',
               'try_on_binder',
@@ -44,7 +38,7 @@ extensions = ['sphinx.ext.autodoc',
               'myst_nb',
               'sphinx.ext.mathjax',
               'sphinx_qt_documentation',
-              'gen_apidoc'
+              'autoapi.extension'
               ]
 # this enables:
 # - https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html#direct-latex-math
@@ -81,8 +75,11 @@ copyright = '2013-2020 pyMOR developers and contributors'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
-#
+# imports have to be delayed until after sys.path modification
+import pymor  # noqa
+import substitutions # noqa
 version = pymor.__version__
+rst_epilog = substitutions.substitutions
 
 # The full version, including alpha/beta/rc tags.
 release = version.split('-')[0]
@@ -242,7 +239,6 @@ latex_use_modindex = False
 # Autosummary
 # -----------------------------------------------------------------------------
 
-import glob
 autosummary_generate = glob.glob("generated/*.rst")
 
 # -----------------------------------------------------------------------------
@@ -269,10 +265,7 @@ intersphinx_mapping = {'python': ('https://docs.python.org/3', None),
                        'PyQt5': ("https://www.riverbankcomputing.com/static/Docs/PyQt5", None),
                        'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
                        'matplotlib': ('https://matplotlib.org', None),
-                       'Sphinx': ('https://www.sphinx-doc.org/en/stable/', None)}
-
-import substitutions
-rst_epilog = substitutions.substitutions
+                       'Sphinx': (' https://www.sphinx-doc.org/en/master/', None)}
 
 modindex_common_prefix = ['pymor.']
 
@@ -284,3 +277,8 @@ branch = os.environ.get('CI_COMMIT_REF_NAME', 'main')
 # this must match PYMOR_ROOT/.ci/gitlab/deploy_docs
 try_on_binder_branch = branch.replace('github/PUSH_', 'from_fork__')
 try_on_binder_slug = os.environ.get('CI_COMMIT_REF_SLUG', slugify.slugify(try_on_binder_branch))
+
+autoapi_dirs = [src_dir / 'pymor']
+# allows incremental
+autoapi_keep_files = True
+autoapi_ignore = ['*/pymordemos/minimal_cpp_demo/*']
