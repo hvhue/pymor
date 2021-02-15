@@ -8,10 +8,23 @@ from pymor.core.config import is_jupyter
 
 
 def format_source(obj):
+    """Format source code of an object.
+
+    Parameters
+    ----------
+    obj
+        The object of which to format the source code.
+
+    Returns
+    -------
+    source
+        The source code as a `Code` widget in case a Jupyter notebook is used or as a string
+        otherwise.
+    """
     source = getsource(obj)
 
     if is_jupyter():
-        from IPython.display import display, Code
+        from IPython.display import Code
         return Code(source, language='python')
     else:
         try:
@@ -24,9 +37,16 @@ def format_source(obj):
 
 
 def print_source(obj):
+    """Print source code of an object.
+
+    Parameters
+    ----------
+    obj
+        The object of which to print the source code.
+    """
     source = format_source(obj)
     if is_jupyter():
-        from IPython.display import display, Code
+        from IPython.display import display
         display(source)
     else:
         print(source)
