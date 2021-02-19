@@ -36,6 +36,7 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.mathjax',
               'sphinx_qt_documentation',
               'autoapi.extension',
+              'autoapi_pymor',
               'sphinxcontrib.bibtex',
               ]
 
@@ -58,6 +59,7 @@ copyright = '2013-2020 pyMOR developers and contributors'
 # imports have to be delayed until after sys.path modification
 import pymor  # noqa
 import substitutions # noqa
+import autoapi_pymor # noqa
 version = pymor.__version__
 rst_epilog = substitutions.substitutions
 
