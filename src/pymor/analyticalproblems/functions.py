@@ -131,7 +131,9 @@ class Function(ParametricObject):
 
 
 class ConstantFunction(Function):
-    """A constant |Function| ::
+    """A constant |Function|
+
+    Defined as ::
 
         f: R^d -> R^shape(c), f(x) = c
 
