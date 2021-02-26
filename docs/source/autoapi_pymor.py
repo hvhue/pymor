@@ -45,6 +45,8 @@ MANUAL_SKIPS = ('pymor.analyticalproblems.domaindescriptions.DomainDescription.d
                 'pymor.operators.interface.Operator.solver_options',
                 'pymor.operators.numpy.NumpyMatrixBasedOperator.sparse',
                 'pymor.discretizers.builtin.fv.NonlinearReactionOperator.linear',
+                'RENDER_VERTEX_SHADER',
+                'RENDER_FRAGMENT_SHADER',
                 )
 SKIPS_RE = re.compile(r'(?:{})'.format('|'.join(map(re.escape, sorted(MANUAL_SKIPS, key=len, reverse=True)))))
 
